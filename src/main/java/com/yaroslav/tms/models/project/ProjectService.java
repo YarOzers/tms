@@ -7,15 +7,13 @@ import java.util.List;
 
 @Service
 public class ProjectService {
-    private final ProjectRepository projectRepository;
-
-    public ProjectService(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
-    }
+    @Autowired
+    private ProjectRepository projectRepository;
 
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
+
 
     public Project getProjectById(Long id) {
         return projectRepository.findById(id).orElse(null);
@@ -28,4 +26,5 @@ public class ProjectService {
     public void deleteProject(Long id) {
         projectRepository.deleteById(id);
     }
+
 }

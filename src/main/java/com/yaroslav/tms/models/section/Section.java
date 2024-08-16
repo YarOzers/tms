@@ -1,10 +1,12 @@
 package com.yaroslav.tms.models.section;
 
-import com.yaroslav.tms.models.test.TestCase;
+import com.yaroslav.tms.models.project.Project;
+import com.yaroslav.tms.models.testcase.TestCase;
 import com.yaroslav.tms.models.testplan.TestPlan;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,9 +20,16 @@ public class Section {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "test_plan_id")
-    private TestPlan testPlan;
+    @JoinColumn(name = "parent_section_id")
+    private Section parentSection;
 
-    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TestCase> testCases;
+    @OneToMany(mappedBy = "parentSection", cascade = CascadeType.ALL)
+    private List<Section> childSections = new ArrayList<>();
+
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
+    private List<TestCase> testCases = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 }

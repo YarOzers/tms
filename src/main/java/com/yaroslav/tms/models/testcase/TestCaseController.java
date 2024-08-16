@@ -1,8 +1,9 @@
-package com.yaroslav.tms.models.test;
+package com.yaroslav.tms.models.testcase;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Optional;
 @NoArgsConstructor
 //@PreAuthorize("hasAnyAuthority('ROLE_user')")
 public class TestCaseController {
-
+    @Autowired
     private TestCaseService testCaseService;
 
     @GetMapping
@@ -23,18 +24,19 @@ public class TestCaseController {
     }
 
     @GetMapping("/{id}")
-    public Optional<TestCase> getTestCaseById(@PathVariable Long id) {
+    public TestCase getTestCaseById(@PathVariable Long id) {
         return testCaseService.getTestCaseById(id);
     }
 
     @PostMapping
     public TestCase createTestCase(@RequestBody TestCase testCase) {
-        return testCaseService.createTestCase(testCase);
+        return testCaseService.saveTestCase(testCase);
     }
 
     @PutMapping("/{id}")
     public TestCase updateTestCase(@PathVariable Long id, @RequestBody TestCase testCase) {
-        return testCaseService.updateTestCase(id, testCase);
+        testCase.setId(id);
+        return testCaseService.saveTestCase(testCase);
     }
 
     @DeleteMapping("/{id}")

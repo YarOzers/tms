@@ -1,6 +1,7 @@
 package com.yaroslav.tms.models.section;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,18 +19,19 @@ public class SectionController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Section> getSectionById(@PathVariable Long id) {
+    public Section getSectionById(@PathVariable Long id) {
         return sectionService.getSectionById(id);
     }
 
     @PostMapping
     public Section createSection(@RequestBody Section section) {
-        return sectionService.createSection(section);
+        return sectionService.saveSection(section);
     }
 
     @PutMapping("/{id}")
     public Section updateSection(@PathVariable Long id, @RequestBody Section section) {
-        return sectionService.updateSection(id, section);
+        section.setId(id);
+        return sectionService.saveSection(section);
     }
 
     @DeleteMapping("/{id}")

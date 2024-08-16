@@ -1,4 +1,4 @@
-package com.yaroslav.tms.models.test;
+package com.yaroslav.tms.models.testcase;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

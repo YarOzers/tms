@@ -8,26 +8,18 @@ import java.util.Optional;
 
 @Service
 public class SectionService {
-    private final SectionRepository sectionRepository;
-
-    public SectionService(SectionRepository sectionRepository) {
-        this.sectionRepository = sectionRepository;
-    }
+    @Autowired
+    private SectionRepository sectionRepository;
 
     public List<Section> getAllSections() {
         return sectionRepository.findAll();
     }
 
-    public Optional<Section> getSectionById(Long id) {
-        return sectionRepository.findById(id);
+    public Section getSectionById(Long id) {
+        return sectionRepository.findById(id).orElse(null);
     }
 
-    public Section createSection(Section section) {
-        return sectionRepository.save(section);
-    }
-
-    public Section updateSection(Long id, Section section) {
-        section.setId(id);
+    public Section saveSection(Section section) {
         return sectionRepository.save(section);
     }
 

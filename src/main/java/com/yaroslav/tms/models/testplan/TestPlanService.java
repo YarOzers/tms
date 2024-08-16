@@ -8,30 +8,26 @@ import java.util.Optional;
 
 @Service
 public class TestPlanService {
-    private final TestPlanRepository testPlanRepository;
-
-    public TestPlanService(TestPlanRepository testPlanRepository) {
-        this.testPlanRepository = testPlanRepository;
-    }
+    @Autowired
+    private TestPlanRepository testPlanRepository;
 
     public List<TestPlan> getAllTestPlans() {
         return testPlanRepository.findAll();
     }
 
-    public Optional<TestPlan> getTestPlanById(Long id) {
-        return testPlanRepository.findById(id);
+    public TestPlan getTestPlanById(Long id) {
+        return testPlanRepository.findById(id).orElse(null);
     }
 
-    public TestPlan createTestPlan(TestPlan testPlan) {
-        return testPlanRepository.save(testPlan);
-    }
-
-    public TestPlan updateTestPlan(Long id, TestPlan testPlan) {
-        testPlan.setId(id);
+    public TestPlan saveTestPlan(TestPlan testPlan) {
         return testPlanRepository.save(testPlan);
     }
 
     public void deleteTestPlan(Long id) {
         testPlanRepository.deleteById(id);
+    }
+
+    public List<TestPlan> getTestPlansByProjectId(Long projectId) {
+        return testPlanRepository.findByProjectId(projectId);
     }
 }
